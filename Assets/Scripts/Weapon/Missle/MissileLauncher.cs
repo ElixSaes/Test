@@ -13,7 +13,7 @@ public class MissileLauncher : Weapon
     void Update()
     {
         // 우클릭을 누른 상태에서 조준 모드 유지
-        bool isAiming = Input.GetMouseButton(1);
+        isAiming = Input.GetMouseButton(1);
 
         // 조준 모드에서 좌클릭 입력 시 미사일 발사
         if (isAiming && Input.GetMouseButtonDown(0))
