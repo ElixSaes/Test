@@ -1,4 +1,3 @@
-using System.Reflection;
 using UnityEngine;
 
 public class MissileLauncher : Weapon
@@ -21,7 +20,7 @@ public class MissileLauncher : Weapon
             Fire();
         }
     }
-    public override void Fire()
+    protected override void DoFire()
     {
         // 미사일 보유 개수가 있고, 쿨타임이 지났을 때만 발사
         if (playerInventory.currentMissileCount > 0 && CanFire())
@@ -42,7 +41,7 @@ public class MissileLauncher : Weapon
         }
         else
         {
-            Debug.Log("미사일이 없거나 아직 발사 쿨타임 중입니다!");
+            Debug.Log("남은 미사일이 없습니다.");
         }
     }
 }

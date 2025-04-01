@@ -3,18 +3,46 @@ using UnityEngine.UI;
 
 public class PlayerHealthUI : MonoBehaviour
 {
-    public PlayerHealth playerHealth;  // 플레이어 체력 스크립트 참조
-    public Image healthFillImage;      // HP 게이지 Image (Filled 타입)
+    [Header("참조 연결")]
+    public PlayerHealth playerHealth;      // PlayerHealth 스크립트 참조
+    public Image healthBarFill;            // HP바 게이지 Image (Filled 타입)
 
     void Start()
     {
-        // 시작 시 최대 체력에 맞춰 초기화
-        healthFillImage.fillAmount = 1f;
+        if (playerHealth == null)
+        {
+            Debug.LogError("PlayerHealth 참조가 연결되지 않았습니다.");
+            return;
+        }
+        if (healthBarFill == null)
+        {
+            Debug.LogError("HealthBarFill Image 참조가 연결되지 않았습니다.");
+            return;
+        }
+
+        // 체력 변경 이벤트에 구독
+        playerHealth.OnHealthChanged += UpdateHealthBar;
+
+        // 초기 UI 업데이트
+        UpdateHealthBar(playerHealth.currentHealth, playerHealth.maxHealth);
+
     }
 
-    void Update()
+    // 체력 변경 이벤트를 통해 UI를 업데이트하는 메서드
+    void UpdateHealthBar(int current, int max)
     {
-        // 현재 체력 비율에 맞춰 fillAmount 업데이트
-        healthFillImage.fillAmount = (float)playerHealth.currentHealth / playerHealth.maxHealth;
+        if (healthBarFill != null)
+        {
+            healthBarFill.fillAmount = (float)current / max;
+        }
+    }
+
+    void OnDestroy()
+    {
+        // 이벤트 구독 해제
+        if (playerHealth != null)
+        {
+            playerHealth.OnHealthChanged -= UpdateHealthBar;
+        }
     }
 }

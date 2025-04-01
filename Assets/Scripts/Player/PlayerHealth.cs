@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
@@ -5,16 +6,24 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
+    // 체력이 변경될 때마다 (현재 체력, 최대 체력)을 전달하는 이벤트
+    public event Action<int, int> OnHealthChanged;
+
     void Start()
     {
         currentHealth = maxHealth;
+        // 초기 UI 업데이트를 위해 이벤트 호출
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    // 데미지를 받아 체력을 감소시키는 메서드
-    public void TakeDamage(int damageAmount)
+    // 데미지를 받으면 체력을 감소시키고, 체력이 0 이하가 되면 사망 처리
+    public void TakeDamage(int damage)
     {
-        currentHealth -= damageAmount;
-        Debug.Log("데미지 받음: " + damageAmount + ", 남은 체력: " + currentHealth);
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        Debug.Log("데미지: " + damage + " / 남은 체력: " + currentHealth);
+        // 체력이 변경될 때마다 이벤트 호출
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
         if (currentHealth <= 0)
         {
             Die();
@@ -25,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
     public void Heal(int healAmount)
     {
         currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
         Debug.Log("회복됨: " + healAmount + ", 현재 체력: " + currentHealth);
     }
 
