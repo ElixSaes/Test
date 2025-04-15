@@ -8,8 +8,10 @@ public abstract class Weapon : MonoBehaviour
     // 공통 Fire 메서드: 발사가 가능한지 체크 후 무기별 세부 발사 로직 호출
     public void Fire()
     {
+
         if (CanFire())
         {
+            
             lastFireTime = Time.time;
             DoFire();   // 무기별 발사 로직 (하위 클래스에서 구현)
         }
@@ -22,6 +24,7 @@ public abstract class Weapon : MonoBehaviour
     // 쿨타임 체크
     protected bool CanFire()
     {
+        Debug.Log($"Time: {Time.time} / lastFireTime + fireRate: {lastFireTime + fireRate}");
         return Time.time >= lastFireTime + fireRate;
     }
 

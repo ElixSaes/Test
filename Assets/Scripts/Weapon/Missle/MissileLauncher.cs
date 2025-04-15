@@ -22,9 +22,11 @@ public class MissileLauncher : Weapon
     }
     protected override void DoFire()
     {
+        
         // 미사일 보유 개수가 있고, 쿨타임이 지났을 때만 발사
-        if (playerInventory.currentMissileCount > 0 && CanFire())
+        if (playerInventory.currentMissileCount > 0)
         {
+            
             // 미사일 프리팹 생성 (spawnPoint의 위치와 회전 사용)
             GameObject missileInstance = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
             Missile missileScript = missileInstance.GetComponent<Missile>();
