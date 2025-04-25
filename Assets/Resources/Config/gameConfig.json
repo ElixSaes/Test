@@ -1,0 +1,8 @@
+{
+    "missileSpeed": 10.0,
+    "missileCooldown": 1.0,
+    "dashDistance": 5.0,
+    "dashDuration": 0.20000000298023225,
+    "missileDamage": 25.0,
+    "maxHealth": 100
+}
