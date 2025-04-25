@@ -6,8 +6,15 @@ public class MissileLauncher : Weapon
     public Transform missileSpawnPoint;
     public PlayerInventory playerInventory; // 플레이어 인벤토리 참조
 
-    public float missileSpeed = 10f; // 미사일 개별 속도
+    public float missileSpeed; // 미사일 개별 속도
+    public float missileDamage;
     private bool isAiming = false;         // 조준 모드 상태
+
+    void Start()
+    {
+        missileSpeed = ConfigLoader.Config.missileSpeed;
+        missileDamage = ConfigLoader.Config.missileDamage;
+    }
 
     void Update()
     {
@@ -34,11 +41,11 @@ public class MissileLauncher : Weapon
             {
                 // 미사일은 spawnPoint의 forward 방향으로 발사됨
                 missileScript.SetDirection(missileSpawnPoint.forward);
+                missileScript.SetStats(missileSpeed, missileDamage); // ← JSON 값 전달
             }
 
-            // 발사 후 보유 미사일 수 감소 및 발사 시간 기록
+            // 발사 후 보유 미사일 수 감소
             playerInventory.currentMissileCount--;
-            lastFireTime = Time.time;
             Debug.Log("미사일 발사됨. 남은 미사일: " + playerInventory.currentMissileCount);
         }
         else

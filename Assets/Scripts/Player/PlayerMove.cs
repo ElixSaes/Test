@@ -11,12 +11,23 @@ public class PlayerMove : MonoBehaviour
     public Transform cameraTransform;  // 카메라 오브젝트 참조
 
     // 대쉬 관련 변수들
-    public float dashDistance = 5f;       // 대쉬 거리
-    public float dashDuration = 0.2f;     // 대쉬 지속 시간
+    public float dashDistance;      // 대쉬 거리
+    public float dashDuration;     // 대쉬 지속 시간
     public float doubleTapThreshold = 0.3f;  // 스페이스바 더블 탭 허용 시간
 
     private float lastSpacePressTime = 0f; // 마지막 스페이스바 누른 시간
     private bool isDashing = false;        // 대쉬 중인지 여부
+
+    private void Start()
+    {
+        var cfg = ConfigLoader.Config;
+
+        // config에서 대쉬 관련 값을 적용
+        dashDistance = cfg.dashDistance;
+        dashDuration = cfg.dashDuration;
+
+        Debug.Log($"[Config 적용] dashDistance: {dashDistance}, dashDuration: {dashDuration}");
+    }
 
     void Update()
     {

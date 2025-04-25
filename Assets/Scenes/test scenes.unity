@@ -1582,6 +1582,7 @@ MonoBehaviour:
   missileSpawnPoint: {fileID: 1947127638}
   playerInventory: {fileID: 1172520472}
   missileSpeed: 10
+  missileDamage: 0
 --- !u!1 &1973233010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1686,6 +1687,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1538c608112318348827e9b66fafdb1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInventory: {fileID: 1172520472}
+  playerHealth: {fileID: 700883814}
+  playerTransform: {fileID: 700883811}
 --- !u!4 &2037623052
 Transform:
   m_ObjectHideFlags: 0
