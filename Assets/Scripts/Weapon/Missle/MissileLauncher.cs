@@ -1,4 +1,3 @@
-using System.Reflection;
 using UnityEngine;
 
 public class MissileLauncher : Weapon
@@ -13,7 +12,7 @@ public class MissileLauncher : Weapon
     void Update()
     {
         // 우클릭을 누른 상태에서 조준 모드 유지
-        bool isAiming = Input.GetMouseButton(1);
+        isAiming = Input.GetMouseButton(1);
 
         // 조준 모드에서 좌클릭 입력 시 미사일 발사
         if (isAiming && Input.GetMouseButtonDown(0))
@@ -21,11 +20,13 @@ public class MissileLauncher : Weapon
             Fire();
         }
     }
-    public override void Fire()
+    protected override void DoFire()
     {
+        
         // 미사일 보유 개수가 있고, 쿨타임이 지났을 때만 발사
-        if (playerInventory.currentMissileCount > 0 && CanFire())
+        if (playerInventory.currentMissileCount > 0)
         {
+            
             // 미사일 프리팹 생성 (spawnPoint의 위치와 회전 사용)
             GameObject missileInstance = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
             Missile missileScript = missileInstance.GetComponent<Missile>();
@@ -42,7 +43,7 @@ public class MissileLauncher : Weapon
         }
         else
         {
-            Debug.Log("미사일이 없거나 아직 발사 쿨타임 중입니다!");
+            Debug.Log("남은 미사일이 없습니다.");
         }
     }
 }
